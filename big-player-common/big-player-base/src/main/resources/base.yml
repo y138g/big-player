@@ -1,0 +1,5 @@
+big:
+  player:
+    nacos:
+      server:
+        url: localhost:8848

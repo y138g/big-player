@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${big.player.nacos.server.url}
+      config:
+        server-addr: ${big.player.nacos.server.url}
+        file-extension: properties
+        name: ${spring.application.name}
