@@ -28,6 +28,9 @@
         <module>big-player-cache</module>
         <module>big-player-sa-token</module>
         <module>big-player-rpc</module>
+        <module>big-player-api</module>
+        <module>big-player-limiter</module>
+        <module>big-player-lock</module>
     </modules>
 
 

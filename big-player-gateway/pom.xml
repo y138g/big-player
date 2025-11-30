@@ -77,6 +77,12 @@
 
         <dependency>
             <groupId>cn.adrian</groupId>
+            <artifactId>big-player-cache</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.adrian</groupId>
             <artifactId>big-player-config</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

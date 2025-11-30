@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+big-player-common/big-player-base/src/main/resources/base.yml

@@ -2,7 +2,7 @@ spring:
   application:
     name: @application.name@
   config:
-    import: classpath:base.yml,classpath:config.yml
+    import: classpath:base.yml,classpath:cache.yml,classpath:config.yml
   cloud:
     gateway:
       default-filters:
@@ -13,5 +13,10 @@ spring:
             allowedHeaders: '*'
             allowedMethods: '*'
             allowedOrigins: '*'
+      routes:
+        - id: big-player-auth
+          uri: lb://big-player-auth
+          predicates:
+            - Path=/auth/**
 server:
   port: 8081
