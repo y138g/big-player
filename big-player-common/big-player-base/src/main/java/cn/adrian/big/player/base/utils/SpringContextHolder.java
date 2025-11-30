@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * Spring上下文
- *
  * @author adrian
  */
 @Component

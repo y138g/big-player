@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author adrian
  */
-//@SpringBootApplication(scanBasePackages = "cn.adrian.big.player.gateway")
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cn.adrian.big.player.gateway")
 public class BigPlayerGatewayApplication {
 
     public static void main(String[] args) {

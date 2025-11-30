@@ -24,6 +24,10 @@
         <module>big-player-skywalking</module>
         <module>big-player-config</module>
         <module>big-player-base</module>
+        <module>big-player-datasource</module>
+        <module>big-player-cache</module>
+        <module>big-player-sa-token</module>
+        <module>big-player-rpc</module>
     </modules>
 
 

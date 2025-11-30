@@ -29,7 +29,7 @@
     </parent>
 
     <modules>
-<!--        <module>big-player-auth</module>-->
+        <module>big-player-auth</module>
         <module>big-player-common</module>
         <module>big-player-gateway</module>
     </modules>

@@ -3,3 +3,16 @@ big:
     nacos:
       server:
         url: localhost:8848
+    mysql:
+      url: jdbc:mysql://localhost:3306/big-player
+      username: root
+      password: 'Zjf1314520.'
+    redis:
+      url: localhost
+      port: 6379
+      database: 1
+#      password:
+    dubbo:
+      nacos:
+        namespace: dubbo_server
+        group: dubbo
