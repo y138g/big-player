@@ -1,6 +1,6 @@
 dubbo:
   consumer:
-    timeout: 3000
+    timeout: 12000
     check: false
   protocol:
     name: dubbo
@@ -14,3 +14,6 @@ dubbo:
     name: ${spring.application.name}
     qos-enable: true
     qos-accept-foreign-ip: false
+    service-discovery:
+      migration: FORCE_INTERFACE
+    register-mode: all

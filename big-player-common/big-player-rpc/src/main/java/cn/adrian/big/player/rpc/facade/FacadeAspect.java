@@ -7,14 +7,13 @@ import cn.adrian.big.player.base.response.ResponseCode;
 import cn.adrian.big.player.base.utils.BeanValidator;
 import com.alibaba.fastjson2.JSON;
 import jakarta.validation.ValidationException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -29,9 +28,8 @@ import java.util.Arrays;
 @Aspect
 @Component
 @Order(Integer.MIN_VALUE)
+@Slf4j
 public class FacadeAspect {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(FacadeAspect.class);
 
     @Around("@annotation(cn.adrian.big.player.rpc.facade.Facade)")
     public Object facade(ProceedingJoinPoint pjp) throws Exception {
@@ -75,14 +73,20 @@ public class FacadeAspect {
      * @param action
      * @param response
      */
-    private void printInfoLog(StopWatch stopWatch, Method method, Object[] args, String action, Object response,
-                              Throwable throwable) {
+    private void printInfoLog(
+            StopWatch stopWatch,
+            Method method,
+            Object[] args,
+            String action,
+            Object response,
+            Throwable throwable
+    ) {
         try {
             //因为此处有JSON.toJSONString，可能会有异常，需要进行捕获，避免影响主干流程
-            LOGGER.info(getInfoMessage(action, stopWatch, method, args, response, throwable), throwable);
+            log.info(getInfoMessage(action, stopWatch, method, args, response, throwable), throwable);
             // 如果校验失败，则返回一个失败的response
         } catch (Exception e1) {
-            LOGGER.error("log failed", e1);
+            log.error("log failed", e1);
         }
     }
 
@@ -94,14 +98,20 @@ public class FacadeAspect {
      * @param action
      * @param response
      */
-    private void printErrorLog(StopWatch stopWatch, Method method, Object[] args, String action, Object response,
-                               Throwable throwable) {
+    private void printErrorLog(
+            StopWatch stopWatch,
+            Method method,
+            Object[] args,
+            String action,
+            Object response,
+            Throwable throwable
+    ) {
         try {
             //因为此处有JSON.toJSONString，可能会有异常，需要进行捕获，避免影响主干流程
-            LOGGER.error(getInfoMessage(action, stopWatch, method, args, response, throwable), throwable);
+            log.error(getInfoMessage(action, stopWatch, method, args, response, throwable), throwable);
             // 如果校验失败，则返回一个失败的response
         } catch (Exception e1) {
-            LOGGER.error("log failed", e1);
+            log.error("log failed", e1);
         }
     }
 
@@ -116,8 +126,14 @@ public class FacadeAspect {
      * @param response  响应
      * @return 拼接后的字符串
      */
-    private String getInfoMessage(String action, StopWatch stopWatch, Method method, Object[] args, Object response,
-                                  Throwable exception) {
+    private String getInfoMessage(
+            String action,
+            StopWatch stopWatch,
+            Method method,
+            Object[] args,
+            Object response,
+            Throwable exception
+    ) {
 
         StringBuilder stringBuilder = new StringBuilder(action);
         stringBuilder.append(" ,method = ");
@@ -197,7 +213,7 @@ public class FacadeAspect {
             return response;
         }
 
-        LOGGER.error("failed to getFailedResponse , returnType ({}) is not instanceof BaseResponse", returnType);
+        log.error("failed to getFailedResponse , returnType ({}) is not instanceof BaseResponse", returnType);
         return null;
     }
 }

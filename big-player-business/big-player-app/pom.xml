@@ -26,25 +26,21 @@
         <dependency>
             <groupId>cn.adrian</groupId>
             <artifactId>big-player-notice</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.adrian</groupId>
+            <artifactId>big-player-user</artifactId>
         </dependency>
 
         <dependency>
             <groupId>cn.adrian</groupId>
             <artifactId>big-player-skywalking</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cn.adrian</groupId>
             <artifactId>big-player-limiter</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.adrian</groupId>
-            <artifactId>big-player-datasource</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <!--    shardingsphere和2.2不兼容，需要使用1.33，但是1.33和springboot 3.2.2 不兼容，所以自定义了 TagInspector和 UnTrustedTagInspector  -->
@@ -52,11 +48,6 @@
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>1.33</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
     </dependencies>

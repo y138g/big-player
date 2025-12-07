@@ -1,2 +1,2 @@
-#cn.adrian.big.player.limiter.configuration.RateLimiterConfiguration
+cn.adrian.big.player.limiter.config.RateLimiterConfiguration
 #cn.adrian.big.player.limiter.configuration.SentinelConfiguration

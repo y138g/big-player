@@ -14,7 +14,7 @@ import static cn.adrian.big.player.base.exception.BizErrorCode.NOTICE_SAVE_FAILE
 
 /**
  * 通知服务
- * @author Hollis
+ * @author Adrian
  */
 @Service
 public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {

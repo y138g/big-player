@@ -31,6 +31,7 @@
         <module>big-player-api</module>
         <module>big-player-limiter</module>
         <module>big-player-lock</module>
+        <module>big-player-web</module>
     </modules>
 
 

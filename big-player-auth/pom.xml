@@ -33,32 +33,32 @@
 
         <dependency>
             <groupId>cn.adrian</groupId>
-            <artifactId>big-player-cache</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.adrian</groupId>
-            <artifactId>big-player-skywalking</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>big-player-web</artifactId>
         </dependency>
 
         <dependency>
             <groupId>cn.adrian</groupId>
             <artifactId>big-player-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cn.adrian</groupId>
             <artifactId>big-player-rpc</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.adrian</groupId>
+            <artifactId>big-player-cache</artifactId>
         </dependency>
 
         <dependency>
             <groupId>cn.adrian</groupId>
             <artifactId>big-player-sa-token</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.adrian</groupId>
+            <artifactId>big-player-skywalking</artifactId>
         </dependency>
 
         <!--  TEST  -->

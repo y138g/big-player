@@ -12,7 +12,8 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * @author Hollis
+ * 通知实体类
+ * @author Adrian
  */
 @Setter
 @Getter

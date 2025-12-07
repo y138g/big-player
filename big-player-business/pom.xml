@@ -22,8 +22,9 @@
     </properties>
 
     <modules>
-        <module>big-player-notice</module>
         <module>big-player-app</module>
+        <module>big-player-notice</module>
+        <module>big-player-user</module>
     </modules>
 
 </project>

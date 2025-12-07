@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 通用模块的配置类
- *
  * @author adrian
  */
 @Configuration

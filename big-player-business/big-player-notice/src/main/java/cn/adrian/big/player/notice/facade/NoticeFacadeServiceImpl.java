@@ -7,6 +7,7 @@ import cn.adrian.big.player.limiter.SlidingWindowRateLimiter;
 import cn.adrian.big.player.notice.domain.entity.Notice;
 import cn.adrian.big.player.notice.domain.service.NoticeService;
 import cn.adrian.big.player.rpc.facade.Facade;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -17,14 +18,13 @@ import java.util.concurrent.TimeUnit;
 
 import static cn.adrian.big.player.api.notice.constat.NoticeConstant.CAPTCHA_KEY_PREFIX;
 import static cn.adrian.big.player.base.exception.BizErrorCode.SEND_NOTICE_DUPLICATED;
-import static cn.adrian.big.player.rpc.constant.DubboConstant.DUBBO_SERVICE_VERSION_ONE;
 
 
 /**
- * @author Hollis
+ * @author Adrian
  */
 @Slf4j
-@DubboService(version = DUBBO_SERVICE_VERSION_ONE)
+@DubboService(version = "1.0.0")
 public class NoticeFacadeServiceImpl implements NoticeFacadeService {
 
     @Autowired
@@ -46,10 +46,7 @@ public class NoticeFacadeServiceImpl implements NoticeFacadeService {
     public NoticeResponse generateAndSendSmsCaptcha(String telephone) {
 
         Boolean access = slidingWindowRateLimiter.tryAcquire(telephone, 1, 60);
-
-        if (!access) {
-            throw new SystemException(SEND_NOTICE_DUPLICATED);
-        }
+        Assert.isTrue(access, () -> new SystemException(SEND_NOTICE_DUPLICATED));
 
         // 生成验证码
         String captcha = RandomUtil.randomNumbers(4);

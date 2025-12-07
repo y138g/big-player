@@ -1,4 +1,4 @@
-package cn.adrian.big.player.app;
+package cn.adrian.big.player;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

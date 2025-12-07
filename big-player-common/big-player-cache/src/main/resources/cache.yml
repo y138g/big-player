@@ -3,7 +3,6 @@ spring:
     redis:
       host: ${big.player.redis.url}
       port: ${big.player.redis.port}
-      database: ${big.player.redis.database}
 #      password: ${big.player.redis.password}
       ssl:
         enabled: true
