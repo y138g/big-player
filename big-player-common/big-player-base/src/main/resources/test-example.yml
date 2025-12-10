@@ -1,0 +1,28 @@
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  datasource:
+    url: jdbc:mysql://localhost:3306/big-player
+    username: root
+    password: '123456'
+
+
+# MyBatis配置
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+dubbo:
+  application:
+    name: big-player-business
+  registry:
+    address: nacos://${big.player.nacos.server.url}
+  consumer:
+    check: false

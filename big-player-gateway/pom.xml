@@ -76,6 +76,11 @@
 
         <dependency>
             <groupId>cn.adrian</groupId>
+            <artifactId>big-player-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.adrian</groupId>
             <artifactId>big-player-cache</artifactId>
         </dependency>
 
