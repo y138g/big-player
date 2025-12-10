@@ -18,5 +18,9 @@ spring:
           uri: lb://big-player-auth
           predicates:
             - Path=/auth/**
+        - id: big-player-business
+          uri: lb://big-player-business
+          predicates:
+            - Path=/user/**
 server:
   port: 8081

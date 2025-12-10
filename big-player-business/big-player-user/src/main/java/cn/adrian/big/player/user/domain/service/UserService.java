@@ -202,10 +202,10 @@ public class UserService extends ServiceImpl<UserMapper, User> implements Initia
     /**
      * 判断昵称是否存在
      * @param nickName
-     * @return 不存在为true
+     * @return 存在为true
      */
     public boolean nickNameExist(String nickName) {
-        if (nickNameBloomFilter == null || !nickNameBloomFilter.contains(nickName)) return true;
+        if (nickNameBloomFilter == null || !nickNameBloomFilter.contains(nickName)) return false;
         // 布隆过滤器原理，若存在需要查库做二次判断
         return userMapper.findByNickName(nickName) != null;
     }
@@ -216,7 +216,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements Initia
      * @return
      */
     public boolean inviteCodeExist(String inviteCode) {
-        if (inviteCodeBloomFilter == null || !inviteCodeBloomFilter.contains(inviteCode)) return true;
+        if (inviteCodeBloomFilter == null || !inviteCodeBloomFilter.contains(inviteCode)) return false;
         // 布隆过滤器原理，若存在需要查库做二次判断
         return userMapper.findByInviteCode(inviteCode) != null;
     }
