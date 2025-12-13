@@ -2,13 +2,21 @@ package cn.adrian.big.player.auth.contorller;
 
 import cn.adrian.big.player.api.notice.response.NoticeResponse;
 import cn.adrian.big.player.api.notice.service.NoticeFacadeService;
+import cn.adrian.big.player.api.user.request.UserQueryRequest;
 import cn.adrian.big.player.api.user.request.UserRegisterRequest;
 import cn.adrian.big.player.api.user.response.UserOperatorResponse;
+import cn.adrian.big.player.api.user.response.UserQueryResponse;
+import cn.adrian.big.player.api.user.response.data.UserInfo;
 import cn.adrian.big.player.api.user.service.UserFacadeService;
 import cn.adrian.big.player.auth.exception.AuthException;
+import cn.adrian.big.player.auth.param.LoginParam;
 import cn.adrian.big.player.auth.param.RegisterParam;
+import cn.adrian.big.player.auth.vo.LoginVO;
 import cn.adrian.big.player.base.validator.IsMobile;
 import cn.adrian.big.player.web.vo.Result;
+import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.lang.Assert;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +27,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import static cn.adrian.big.player.api.notice.constat.NoticeConstant.CAPTCHA_KEY_PREFIX;
+import static cn.adrian.big.player.auth.exception.AuthErrorCode.USER_NOT_EXIST;
 import static cn.adrian.big.player.auth.exception.AuthErrorCode.VERIFICATION_CODE_WRONG;
 
 /**
@@ -39,6 +48,11 @@ public class AuthController {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    /**
+     * 默认登录超时时间：7天
+     */
+    private static final Integer DEFAULT_LOGIN_SESSION_TIMEOUT = 60 * 60 * 24 * 7;
 
     /**
      * 发送验证码
@@ -62,7 +76,7 @@ public class AuthController {
     public Result<Boolean> register(@Valid @RequestBody RegisterParam registerParam) {
         log.info("开始注册用户，手机号: {}", registerParam.getTelephone());
 
-        //验证码校验
+        // 验证码校验
         String cachedCode = redisTemplate.opsForValue().get(CAPTCHA_KEY_PREFIX + registerParam.getTelephone());
 
         if (!StringUtils.equalsIgnoreCase(cachedCode, registerParam.getCaptcha())) {
@@ -70,7 +84,7 @@ public class AuthController {
             throw new AuthException(VERIFICATION_CODE_WRONG);
         }
 
-        //注册
+        // 注册
         UserRegisterRequest userRegisterRequest = new UserRegisterRequest();
         userRegisterRequest.setTelephone(registerParam.getTelephone());
         userRegisterRequest.setInviteCode(registerParam.getInviteCode());
@@ -80,5 +94,28 @@ public class AuthController {
         if (registerResult.getSuccess()) return Result.success(true);
 
         return Result.error(registerResult.getResponseCode(), registerResult.getResponseMessage());
+    }
+
+    @PostMapping("/login")
+    public Result<LoginVO> login(@Valid @RequestBody LoginParam loginParam) {
+
+        String loginCaptcha = redisTemplate.opsForValue().get(CAPTCHA_KEY_PREFIX + loginParam.getTelephone());
+        Assert.isTrue(StringUtils.equalsIgnoreCase(loginCaptcha, loginParam.getCaptcha()),
+                () -> new AuthException(VERIFICATION_CODE_WRONG));
+
+        UserQueryRequest userPhoneQueryRequest = new UserQueryRequest(loginParam.getTelephone());
+        UserQueryResponse<UserInfo> response = userFacadeService.query(userPhoneQueryRequest);
+        UserInfo userInfo = response.getData();
+
+        Assert.isTrue(userInfo != null, () -> new AuthException(USER_NOT_EXIST));
+
+        StpUtil.login(userInfo.getUserId(), new SaLoginModel().setIsLastingCookie(loginParam.getRememberMe())
+                .setTimeout(DEFAULT_LOGIN_SESSION_TIMEOUT));
+
+        StpUtil.getSession().set(userInfo.getUserId().toString(), userInfo);
+
+        LoginVO loginVO = new LoginVO(userInfo);
+
+        return Result.success(loginVO);
     }
 }

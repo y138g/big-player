@@ -9,7 +9,9 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.CacheManager;
+import com.alicp.jetcache.anno.CacheRefresh;
 import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.Cached;
 import com.alicp.jetcache.template.QuickConfig;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.PostConstruct;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import static cn.adrian.big.player.api.user.constant.UserOperateTypeEnum.REGISTER;
 import static cn.adrian.big.player.user.infrastructure.exception.UserErrorCode.DUPLICATE_TELEPHONE_NUMBER;
@@ -126,6 +129,31 @@ public class UserService extends ServiceImpl<UserMapper, User> implements Initia
         });
 
         return userOperatorResponse;
+    }
+
+    /**
+     * 根据id查询用户信息
+     * @param userId
+     * @return
+     */
+    @Cached(
+            name = ":user:cache:id:",   // 缓存前缀
+            cacheType = CacheType.BOTH, // 缓存类型，both是指 本地缓存+远程缓存（这里是redis）
+            key = "#userId",            // SpEL表达式，拼接key :user:cache:id:123
+            cacheNullValue = true       // 是否缓存null值，默认为false
+    )
+    @CacheRefresh(refresh = 60, timeUnit = TimeUnit.MINUTES) // 缓存60分钟刷新一次
+    public User findById(Long userId) {
+        return userMapper.findById(userId);
+    }
+
+    /**
+     * 根据手机号查询用户信息
+     * @param telephone
+     * @return
+     */
+    public User findByTelephone(String telephone) {
+        return userMapper.findByTelephone(telephone);
     }
 
     private void updateUserCache(String userId, User user) {

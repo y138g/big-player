@@ -19,6 +19,11 @@
         <result property="lockVersion" column="LOCK_VERSION"/>
     </resultMap>
 
+    <select id="findById" resultMap="BaseResultMap">
+        select * from user where deleted = 0
+        <if test="id != null">AND id = #{id}</if>
+    </select>
+
     <select id="findByNickName" resultMap="BaseResultMap">
         select * from user where deleted = 0
         <if test="nickName != null">AND nick_name = #{nickName}</if>

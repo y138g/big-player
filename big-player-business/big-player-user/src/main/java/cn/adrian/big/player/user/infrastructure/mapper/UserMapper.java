@@ -13,6 +13,13 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper extends BaseMapper<User> {
 
     /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    User findById(@NotNull Long id);
+
+    /**
      * 根据昵称查询用户
      * @param nickName
      * @return
